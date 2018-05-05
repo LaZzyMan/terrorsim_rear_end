@@ -1,5 +1,5 @@
 from django.contrib.gis import admin
-from .models import WorldBorder, GlobalTerrorism, Country, Attack, Weapon, Target, Region, TerrorismData
+from .models import Country, Attack, Weapon, Target, Region, TerrorismData
 
 # Register your models here.
 
@@ -7,20 +7,6 @@ from .models import WorldBorder, GlobalTerrorism, Country, Attack, Weapon, Targe
 
 admin.site.site_header = '后台数据管理'
 admin.site.site_title = '数据管理平台'
-
-
-@admin.register(WorldBorder)
-class WorldBorderAdmin(admin.OSMGeoAdmin):
-    pass
-
-
-@admin.register(GlobalTerrorism)
-class GlobalTerrorismAdmin(admin.OSMGeoAdmin):
-    list_display = ('id', 'year', 'month', 'day')
-    list_per_page = 50
-    ordering = ('-id',)
-    list_filter = ('year', 'month', 'day')
-    search_fields = ('id', 'year', 'month', 'day')
 
 
 @admin.register(Country)

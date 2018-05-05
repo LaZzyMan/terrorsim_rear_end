@@ -2,7 +2,7 @@ import pandas as pd
 import datetime
 from random import randint
 import numpy as np
-from .models import Attack, Target, TerrorismData, Weapon, Country, Region, GlobalTerrorism
+from .models import Attack, Target, TerrorismData, Weapon, Country, Region
 from django.contrib.gis.geos import Point
 
 

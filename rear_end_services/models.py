@@ -74,32 +74,3 @@ class TerrorismData(models.Model):
         return str(self.id)
 
 
-class GlobalTerrorism(models.Model):
-    verbose_name = '恐怖袭击位置数据'
-    id = models.CharField(max_length=50, primary_key=True)
-    year = models.CharField(max_length=50, verbose_name='年份')
-    month = models.CharField(max_length=50, verbose_name='月份')
-    day = models.CharField(max_length=50, verbose_name='日期')
-    geom = models.PointField(srid=4326, verbose_name='位置')
-
-    def __str__(self):
-        return self.id
-
-
-class WorldBorder(models.Model):
-    name = models.CharField(max_length=50)
-    area = models.IntegerField()
-    pop2005 = models.IntegerField('Population 2005')
-    fips = models.CharField('FIPS Code', max_length=2)
-    iso2 = models.CharField('2 Digit ISO', max_length=2)
-    iso3 = models.CharField('3 Digit ISO', max_length=3)
-    un = models.IntegerField('United Nations Code')
-    region = models.IntegerField('Region Code')
-    subregion = models.IntegerField('Sub-Region Code')
-    lon = models.FloatField()
-    lat = models.FloatField()
-    mpoly = models.MultiPolygonField(srid=4326)
-
-    def __str__(self):
-        return self.name
-

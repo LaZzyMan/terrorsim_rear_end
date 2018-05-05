@@ -2,3 +2,7 @@
 /.idea
 /terrorism_rear_end/data
 /data
+/__pycache__
+/rear_end_services/__pycache__
+/rear_end_services/migartions/__pycache__
+/terrorism_rear_end/__pycache__

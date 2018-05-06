@@ -130,3 +130,7 @@ USE_TZ = True
 STATIC_ROOT = '/var/www/script/static/terrorism_rear_end/'
 
 STATIC_URL = '/static/terrorism_rear_end/'
+
+REST_FRAMEWORK = {
+    'PAGE_SIZE': 10
+}

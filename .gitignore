@@ -1,5 +1,6 @@
 /venv
 /.idea
+/.vscode
 /terrorism_rear_end/data
 /data
 /__pycache__

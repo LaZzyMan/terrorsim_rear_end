@@ -34,3 +34,7 @@ class TargetViewSet(viewsets.ReadOnlyModelViewSet):
 class TDInfoViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.TerrorismData.objects.all()
     serializer_class = serializers.TDInfoSerialier
+
+class TDGeneralViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = models.TerrorismData.objects.all()
+    serializer_class = serializers.TDGeoSerializer

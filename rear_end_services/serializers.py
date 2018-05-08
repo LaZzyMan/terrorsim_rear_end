@@ -14,7 +14,8 @@ class TDGeoSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = TerrorismData
         geo_field = 'location'
-        id_field = 'id'
+        fields = ('year', 'month', 'day')
+        
 
 class CountrySerializer(serializers.ModelSerializer):
     class Meta:

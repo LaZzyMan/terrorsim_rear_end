@@ -89,7 +89,13 @@ def load_td(filename, start=0):
         except Exception as e:
             raise Exception(i)
 
-
+def make_1993_data():
+    events = TerrorismData.objects.filter(year=1983)
+    for event in events:
+        event.id = '1993' + event.id[4:]
+        event.year = 1993
+        event.save()
+        print('Load', event)
 
 if __name__ == '__main__':
     # load_country('../terrorism_rear_end/data/country.csv')

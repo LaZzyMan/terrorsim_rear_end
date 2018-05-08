@@ -49,18 +49,18 @@ class TerrorismData(models.Model):
     day = models.IntegerField(verbose_name='日期', null=True, db_index=True)
     date = models.DateField(verbose_name='时间', null=True)
     country_id = models.ForeignKey(Country, on_delete=models.SET_NULL,
-                                   verbose_name='国家', blank=True, null=True, db_index=True)
+                                   verbose_name='国家', blank=True, null=True, db_index=True, related_name='country')
     region_id = models.ForeignKey(Region, on_delete=models.SET_NULL,
-                                  verbose_name='地区', blank=True, null=True, db_index=True)
+                                  verbose_name='地区', blank=True, null=True, db_index=True, related_name='region')
     city = models.CharField(verbose_name='城市', null=True, max_length=200)
     summary = models.TextField(verbose_name='事件报道', null=True)
     suicide = models.IntegerField(verbose_name='自杀式袭击', choices=[(0, 'no'), (1, 'yes')], blank=True, db_index=True)
     attack_type = models.ForeignKey(Attack, on_delete=models.SET_NULL,
-                                    verbose_name='袭击方式', blank=True, null=True, db_index=True)
+                                    verbose_name='袭击方式', blank=True, null=True, db_index=True, related_name='attack')
     target_type = models.ForeignKey(Target, on_delete=models.SET_NULL,
-                                    verbose_name='袭击目标', blank=True, null=True, db_index=True)
+                                    verbose_name='袭击目标', blank=True, null=True, db_index=True, related_name='target')
     weapon_type = models.ForeignKey(Weapon, on_delete=models.SET_NULL,
-                                    verbose_name='武器类型', blank=True, null=True, db_index=True)
+                                    verbose_name='武器类型', blank=True, null=True, db_index=True, related_name='weapon')
     group_name = models.CharField(verbose_name='组织名称', max_length=200, blank=True)
     motive = models.TextField(verbose_name='动机', null=True)
     num_kill = models.IntegerField(verbose_name='死亡人数', null=True)

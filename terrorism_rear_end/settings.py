@@ -132,5 +132,6 @@ STATIC_ROOT = '/var/www/script/static/terrorism_rear_end/'
 STATIC_URL = '/static/terrorism_rear_end/'
 
 REST_FRAMEWORK = {
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 10,
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
 }

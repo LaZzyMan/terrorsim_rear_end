@@ -2,8 +2,16 @@ import pandas as pd
 import datetime
 from random import randint
 import numpy as np
-from .models import Attack, Target, TerrorismData, Weapon, Country, Region
+from .models import Attack, Target, TerrorismData, Weapon, Country, Region, Keyword
 from django.contrib.gis.geos import Point
+
+
+def load_keyword(filename):
+    data = pd.read_csv(filename)
+    for id, word, f in zip(data.id, data.word, data.frequency):
+        t = Keyword(word_id=id, word=word, frequency=f)
+        t.save()
+        print('Load', t)
 
 
 def load_country(filename):
@@ -62,8 +70,8 @@ def load_td(filename, start=0):
                 t.day = data.iday[i]
             date = datetime.date(t.year, t.month, t.day)
             t.date = date
-            t.country_id = Country.objects.get(country_id=data.country[i])
-            t.region_id = Region.objects.get(region_id=data.region[i])
+            t.country = Country.objects.get(country_id=data.country[i])
+            t.region = Region.objects.get(region_id=data.region[i])
             t.city = data.city[i]
             t.summary = data.summary[i]
             if not np.isnan(data.suicide[i]):
@@ -96,6 +104,17 @@ def make_1993_data():
         event.year = 1993
         event.save()
         print('Load', event)
+
+def make_keyword_relation(filename):
+    mapping = pd.read_csv(filename)
+    for id, text in zip(mapping.eventid, mapping.word_id):
+        t = TerrorismData.objects.get(id=eventid)
+        words = text.split()
+        for word in words:
+            w = Keyword.objects.get(word_id=word)
+            t.keywords.add(w)
+        print('Load ', t)
+
 
 if __name__ == '__main__':
     # load_country('../terrorism_rear_end/data/country.csv')

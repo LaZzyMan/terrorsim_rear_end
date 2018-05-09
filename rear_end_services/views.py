@@ -7,7 +7,6 @@ from rear_end_services import serializers, models
 from rest_framework import filters
 # Create your views here.
 
-
 class YearFilter(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
         year = request.query_params.get('year', None)

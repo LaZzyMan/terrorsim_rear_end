@@ -15,13 +15,13 @@ region_mapping = {
     'region_id': 'regionid',
     'boundary': 'MULTIPOLYGON',
 }
-gt_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), '../data/region', 'region.shp'))
+gt_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), '../data/country', 'countries.shp'))
 
 
 def load_shp(verbose=True):
-    lm = LayerMapping(Region,
+    lm = LayerMapping(Country,
                       gt_shp,
-                      region_mapping,
+                      country_mapping,
                       transform=False,
                       encoding='iso-8859-1',)
     lm.save(strict=True, verbose=verbose)

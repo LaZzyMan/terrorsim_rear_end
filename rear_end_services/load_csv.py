@@ -108,7 +108,7 @@ def make_1993_data():
 def make_keyword_relation(filename):
     mapping = pd.read_csv(filename)
     for id, text in zip(mapping.eventid, mapping.word_id):
-        t = TerrorismData.objects.get(id=eventid)
+        t = TerrorismData.objects.get(id=id)
         words = text.split()
         for word in words:
             w = Keyword.objects.get(word_id=word)

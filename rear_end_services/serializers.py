@@ -7,7 +7,7 @@ class CountryGeoSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Country
         geo_field = 'boundary'
-        fields = ('country_id', 'country_name')
+        fields = ('country_id', 'country_name', 'region_id')
 
 
 class RegionGeoSerializer(GeoFeatureModelSerializer):
@@ -20,7 +20,7 @@ class RegionGeoSerializer(GeoFeatureModelSerializer):
 class CountrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Country
-        fields = ('country_id', 'country_name')
+        fields = ('country_id', 'country_name', 'region_id')
 
 
 class RegionSerializer(serializers.ModelSerializer):
@@ -70,8 +70,14 @@ class TDInfoSerialier(GeoFeatureModelSerializer):
 
 
 class TDGeoSerializer(GeoFeatureModelSerializer):
-    country_id = CountrySerializer()
+    country = CountrySerializer()
+    day_in_year = serializers.SerializerMethodField()
+
     class Meta:
         model = TerrorismData
         geo_field = 'location'
-        fields = ('id', 'year', 'month', 'day', 'city', 'country_id')
+        fields = ('id', 'year', 'month', 'day', 'city', 'country', 'day_in_year')
+    
+    def get_day_in_year(self, obj):
+        return obj.date.timetuple().tm_yday
+

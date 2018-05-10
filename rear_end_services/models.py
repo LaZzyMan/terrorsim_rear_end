@@ -15,8 +15,8 @@ class Country(models.Model):
     country_id = models.IntegerField(primary_key=True)
     country_name = models.CharField(verbose_name='国家名', max_length=100)
     boundary = models.MultiPolygonField(verbose_name='边界', srid=4326)
-    # rid = models.IntegerField(null=True)
     region = models.ForeignKey(Region, on_delete=models.SET_NULL, verbose_name='地区', blank=True, null=True, db_index=True, related_name='country_region')
+    # rid = models.IntegerField(null=True)
 
     def __str__(self):
         return self.country_name

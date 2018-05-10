@@ -8,7 +8,7 @@ class Region(models.Model):
     boundary = models.MultiPolygonField(verbose_name='边界', srid=4326)
 
     def __str__(self):
-        return self.region_name
+        return self.regionName
 
 
 class Country(models.Model):

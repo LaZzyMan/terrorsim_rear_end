@@ -78,6 +78,6 @@ class TDGeoSerializer(GeoFeatureModelSerializer):
         geo_field = 'location'
         fields = ('id', 'year', 'month', 'day', 'city', 'country', 'dayInYear')
     
-    def get_day_in_year(self, obj):
+    def get_dayInYear(self, obj):
         return obj.date.timetuple().tm_yday
 

@@ -1,5 +1,5 @@
 from django.contrib.gis import admin
-from .models import Country, Attack, Weapon, Target, Region, TerrorismData
+from .models import Country, Attack, Weapon, Target, Region, TerrorismData, Keyword
 
 # Register your models here.
 
@@ -11,33 +11,38 @@ admin.site.site_title = '数据管理平台'
 
 @admin.register(Country)
 class CountryAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['countryId', 'countryName']
 
 
 @admin.register(Region)
 class RegionAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['regionId', 'regionName']
 
 
 @admin.register(Attack)
 class AttackAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['attackTypeId', 'attackTypeName']
 
 
 @admin.register(Target)
 class TargetAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['targetTypeId', 'targetTypeName']
 
 
 @admin.register(Weapon)
 class WeaponAdmin(admin.ModelAdmin):
-    list_display = ['weapon_type_id', 'weapon_type_name']
-    list_filter = ['weapon_type_id']
+    list_display = ['weaponTypeId', 'weaponTypeName']
+
+
+@admin.register(Keyword)
+class KeywordAdmin(admin.ModelAdmin):
+    list_display = ['wordId', 'word', 'frequency']
+    search_fields = ['wordId']
 
 
 @admin.register(TerrorismData)
 class TDAdmin(admin.ModelAdmin):
-    list_display = ['id', 'date', 'country_id', 'city', 'num_kill', 'num_wound']
+    list_display = ['id', 'date', 'country', 'city', 'numKill', 'numWound']
     list_per_page = 30
-    list_filter = ['date']
-    search_fields = ['country_id', 'region_id', 'attack_type', 'target_type', 'weapon_type']
+    list_filter = ['date', 'region', 'attackType', 'targetType', 'weaponType']
+    search_fields = ['country']

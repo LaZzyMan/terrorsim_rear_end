@@ -4,15 +4,15 @@ from .models import Country, Region
 
 # Auto-generated `LayerMapping` dictionary for GlobalTerrorism model
 country_mapping = {
-    'country_id': 'id',
-    'country_name': 'name',
-    'region_id': 'regionid',
-    'region_name': 'region',
+    'countryId': 'id',
+    'countryName': 'name',
+    'regionId': 'regionid',
+    'regionName': 'region',
     'boundary': 'MULTIPOLYGON',
 }
 
 region_mapping = {
-    'region_id': 'regionid',
+    'regionId': 'regionid',
     'boundary': 'MULTIPOLYGON',
 }
 gt_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), '../data/country', 'countries.shp'))
@@ -29,14 +29,14 @@ def load_shp(verbose=True):
 
 def fit_region_name():
     for obj in Country.objects.all():
-        r = Region.objects.get(region_id=obj.region_id)
-        r.region_name = obj.region_name
+        r = Region.objects.get(regionId=obj.regionId)
+        r.regionName = obj.region_name
         r.save()
         print(obj.region_name)
 
 def fit_fk():
     for obj in Country.objects.all():
-        r = Region.objects.get(region_id=obj.rid)
+        r = Region.objects.get(regionId=obj.rid)
         obj.region = r
         obj.save()
         print(obj)

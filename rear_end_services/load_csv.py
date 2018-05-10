@@ -9,7 +9,7 @@ from django.contrib.gis.geos import Point
 def load_keyword(filename):
     data = pd.read_csv(filename)
     for id, word, f in zip(data.id, data.word, data.frequency):
-        t = Keyword(word_id=id, word=word, frequency=f)
+        t = Keyword(wordId=id, word=word, frequency=f)
         t.save()
         print('Load', t)
 
@@ -17,7 +17,7 @@ def load_keyword(filename):
 def load_country(filename):
     data = pd.read_csv(filename)
     for code, country in zip(data.code, data.country):
-        t = Country(country_id=code, country_name=country)
+        t = Country(countryId=code, countryName=country)
         t.save()
         print('Load ', t)
 
@@ -25,7 +25,7 @@ def load_country(filename):
 def load_region(filename):
     data = pd.read_csv(filename)
     for code, region in zip(data.code, data.region):
-        t = Region(region_id=code, region_name=region)
+        t = Region(regionId=code, regionName=region)
         t.save()
         print('Load ', t)
 
@@ -33,7 +33,7 @@ def load_region(filename):
 def load_attack(filename):
     data = pd.read_csv(filename)
     for code, attack in zip(data.code, data.attacktype1):
-        t = Attack(attack_type_id=code, attack_type_name=attack)
+        t = Attack(attackTypeId=code, attackTypeName=attack)
         t.save()
         print('Load ', t)
 
@@ -41,7 +41,7 @@ def load_attack(filename):
 def load_target(filename):
     data = pd.read_csv(filename)
     for code, target in zip(data.code, data.targtype1):
-        t = Target(target_type_id=code, target_type_name=target)
+        t = Target(targetTypeId=code, targetTypeName=target)
         t.save()
         print('Load ', t)
 
@@ -49,7 +49,7 @@ def load_target(filename):
 def load_weapon(filename):
     data = pd.read_csv(filename)
     for code, weapon in zip(data.code, data.weaptype1):
-        t = Weapon(weapon_type_id=code, weapon_type_name=weapon)
+        t = Weapon(weaponTypeId=code, weaponTypeName=weapon)
         t.save()
         print('Load ', t)
 
@@ -70,27 +70,27 @@ def load_td(filename, start=0):
                 t.day = data.iday[i]
             date = datetime.date(t.year, t.month, t.day)
             t.date = date
-            t.country = Country.objects.get(country_id=data.country[i])
-            t.region = Region.objects.get(region_id=data.region[i])
+            t.country = Country.objects.get(countryId=data.country[i])
+            t.region = Region.objects.get(regionId=data.region[i])
             t.city = data.city[i]
             t.summary = data.summary[i]
             if not np.isnan(data.suicide[i]):
                 t.suicide = data.suicide[i]
             if not np.isnan(data.attacktype1[i]):
-                t.attack_type = Attack.objects.get(attack_type_id=data.attacktype1[i])
+                t.attackType = Attack.objects.get(attackTypeId=data.attacktype1[i])
             if not np.isnan(data.targtype1[i]):
-                t.target_type = Target.objects.get(target_type_id=data.targtype1[i])
+                t.targetType = Target.objects.get(targetTypeId=data.targtype1[i])
             if not np.isnan(data.weaptype1[i]):
-                t.weapon_type = Weapon.objects.get(weapon_type_id=data.weaptype1[i])
-            t.group_name = data.gname[i]
+                t.weaponType = Weapon.objects.get(weaponTypeId=data.weaptype1[i])
+            t.groupName = data.gname[i]
             t.motive = data.motive[i]
             if not np.isnan(data.nkill[i]):
-                t.num_kill = data.nkill[i]
+                t.numKill = data.nkill[i]
             if not np.isnan(data.nwound[i]):
-                t.num_wound = data.nwound[i]
+                t.numWound = data.nwound[i]
             if not np.isnan(data.propvalue[i]):
-                t.prop_value = data.propvalue[i]
-            t.prop_comment = data.propcomment[i]
+                t.propValue = data.propvalue[i]
+            t.propComment = data.propcomment[i]
             t.location = Point(data.longitude[i], data.latitude[i])
             t.save()
             print('Load ', i)
@@ -111,7 +111,7 @@ def make_keyword_relation(filename):
         t = TerrorismData.objects.get(id=id)
         words = text.split()
         for word in words:
-            w = Keyword.objects.get(word_id=word)
+            w = Keyword.objects.get(wordId=word)
             t.keywords.add(w)
         print('Load ', t)
 

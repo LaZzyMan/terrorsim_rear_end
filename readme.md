@@ -15,6 +15,10 @@ API root: http://47.94.208.122/gtd/api
 year | 年份 | 1970
 countryid|国家编号|100
 regionid|地区编号|12
+keyword|关键词|10
+start|开始时间|19700101
+end|结束时间|19701231
+poly|多边形边界|[(0,0),(0,1),(1,1),(0,0)]
 format|格式|api/json
 
 返回数据格式为geojson：
@@ -23,25 +27,28 @@ format|格式|api/json
     "type": "FeatureCollection",
     "features": [
         {
+            "id": "197012310002",
             "type": "Feature",
             "geometry": {
+                "type": "Point",
                 "coordinates": [
                     -118.027606,
                     34.06857
-                ],
-                "type": "Point"
+                ]
             },
             "properties": {
                 "year": 1970,
                 "month": 12,
                 "day": 31,
                 "city": "El Monte ",
-                "country_id": {
-                    "country_id": 217,
-                    "country_name": "United States"
-                }
+                "country": {
+                    "countryId": 165,
+                    "countryName": "United States",
+                    "region": 1
+                },
+                "dayInYear": 365
             }
-        }
+        },
     ]
 }
 ```
@@ -60,6 +67,10 @@ eg: http://47.94.208.122/gtd/api/tdinfo/201701270001
 year | 年份 | 1970
 countryid|国家编号|100
 regionid|地区编号|12
+keyword|关键词|10
+start|开始时间|19700101
+end|结束时间|19701231
+poly|多边形边界|[(0,0),(0,1),(1,1),(0,0)]
 format|格式|api/json
 
 返回数据格式为geojson：
@@ -91,7 +102,22 @@ format|格式|api/json
 }
 ```
 
+#### 统计数据：/statistics
+
+返回格式数据格式：
+```json
+
+```
+
 ### 国家数据：country
+
+#### retrieve调用：
+pk=countryId
+
+eg: http://47.94.208.122/gtd/api/country/1
+
+#### list调用:
+返回所有国家边界多边形数据。
 
 ### 地区数据：region
 

@@ -18,9 +18,13 @@ class RegionGeoSerializer(GeoFeatureModelSerializer):
 
 
 class CountrySerializer(serializers.ModelSerializer):
+    # sumKill = serializers.SerializerMethodField()
+    # sumWound = serializers.SerializerMethodField()
+    # sumProp = serializers.SerializerMethodField()
     class Meta:
         model = Country
         fields = ('countryId', 'countryName', 'region')
+
 
 
 class RegionSerializer(serializers.ModelSerializer):
@@ -59,14 +63,15 @@ class TDInfoSerialier(GeoFeatureModelSerializer):
     attackType = AttackSerializer()
     weaponType = WeaponSerializer()
     targetType = TargetSerializer()
-    keywords = KeywordSerializer()
+    # keywords = KeywordSerializer(many=True)
     class Meta:
         model = TerrorismData
         geo_field = 'location'
         fields = ('id', 'year', 'month', 'day', 'date', 'city',
         'summary', 'suicide', 'groupName', 'motive', 'numKill',
         'numWound', 'propValue', 'propComment', 'country',
-        'region', 'attackType', 'targetType', 'weaponType', 'keywords')
+        'region', 'attackType', 'targetType', 'weaponType',)
+        
 
 
 class TDGeoSerializer(GeoFeatureModelSerializer):

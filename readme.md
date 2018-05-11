@@ -6,6 +6,8 @@
 
 API root: http://47.94.208.122/gtd/api
 
+API schema: http://47.94.208.122/gtd/api/schema
+
 ### 点位数据：tdgeneral
 
 调用参数：

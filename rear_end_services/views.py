@@ -164,12 +164,13 @@ class TDInfoViewSet(viewsets.ReadOnlyModelViewSet):
         返回按过滤字段筛选后的统计数据
         '''
         td_queryset = self.filter_queryset(self.get_queryset())
+        weapon = td_queryset.values('weaponType').annotate(count=Count('weaponType')).values('weaponType', 'weaponType__weaponTypeName', 'count').order_by('-count')
+        weapon = weapon.annotate(weaponTypeName=F('weaponType__weaponTypeName')).values('weaponType', 'weaponTypeName', 'count')
         attack = td_queryset.values('attackType').annotate(count=Count('attackType')).values('attackType', 'attackType__attackTypeName', 'count').order_by('-count')
         attack = attack.annotate(attackTypeName=F('attackType__attackTypeName')).values('attackType', 'attackTypeName', 'count')
         target = td_queryset.values('targetType').annotate(count=Count('targetType')).values('targetType', 'targetType__targetTypeName', 'count').order_by('-count')
         target = target.annotate(targetTypeName=F('targetType__targetTypeName')).values('targetType', 'targetTypeName', 'count')
-        weapon = td_queryset.values('weaponType').annotate(count=Count('weaponType')).values('weaponType', 'weaponType__weaponTypeName', 'count').order_by('-count')
-        weapon = target.annotate(weaponTypeName=F('weaponType__weaponTypeName')).values('weaponType', 'weaponTypeName', 'count')
+        
         # sum_kill = td_queryset.values('numKill').annotate(sumKill=Sum('numKill'))
         sum_kill = 0
         sum_wound = 0
@@ -181,7 +182,7 @@ class TDInfoViewSet(viewsets.ReadOnlyModelViewSet):
                 sum_wound += i.numWound
             if i.propValue is not None:
                 sum_prop += i.propValue
-        return Response({'kill': sum_kill, 'wound': sum_wound, 'prop': sum_prop, 'attack': attack, 'target': target, 'weapon': weapon})
+        return Response({'num': td_queryset.count(), 'kill': sum_kill, 'wound': sum_wound, 'prop': sum_prop, 'attack': attack, 'target': target, 'weapon': weapon})
     
     @action(methods=['get'], detail=False)
     def trend(self, request):
@@ -189,7 +190,8 @@ class TDInfoViewSet(viewsets.ReadOnlyModelViewSet):
         返回国家/地区的年袭击数、死伤人数、经济损失趋势
         '''
         td_queryset = self.filter_queryset(self.get_queryset())
-        return td_queryset
+        trend = td_queryset.values('year').annotate(count=Count('year'), sumKill=Sum('numKill'), sumWound=Sum('numWound'), sumProp=Sum('propValue')).values('year', 'count', 'sumKill', 'sumWound', 'sumProp')
+        return Response(trend.order_by('year'))
 
 
 class TDGeneralViewSet(viewsets.ReadOnlyModelViewSet):

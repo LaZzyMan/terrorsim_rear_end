@@ -75,7 +75,7 @@ class PeriodFilter(filters.BaseFilterBackend):
 class PolygonFilter(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
         p_str = request.query_params.get('ploy', None)
-        if point_list is not None:
+        if p_str is not None:
             poly = Polygon(json.loads(p_str), srid=4326)
             return queryset.filter(location__within=poly)
         return queryset
@@ -182,6 +182,14 @@ class TDInfoViewSet(viewsets.ReadOnlyModelViewSet):
             if i.propValue is not None:
                 sum_prop += i.propValue
         return Response({'kill': sum_kill, 'wound': sum_wound, 'prop': sum_prop, 'attack': attack, 'target': target, 'weapon': weapon})
+    
+    @action(methods=['get'], detail=False)
+    def trend(self, request):
+        '''
+        返回国家/地区的年袭击数、死伤人数、经济损失趋势
+        '''
+        td_queryset = self.filter_queryset(self.get_queryset())
+        return td_queryset
 
 
 class TDGeneralViewSet(viewsets.ReadOnlyModelViewSet):

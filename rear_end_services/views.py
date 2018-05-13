@@ -199,7 +199,8 @@ class TDInfoViewSet(viewsets.ReadOnlyModelViewSet):
         返回全球各地区某时段袭击次数、死亡人数、经济损失
         '''
         td_queryset = self.filter_queryset(self.get_queryset())
-        gs = td_queryset.values('region').annotate(count=Count('region'), sumKill=Sum('numKill'), sumWound=Sum('numWound'), sumProp=Sum('propValue')).values('region', 'count', 'sumKill', 'sumWound', 'sumProp')
+        gs = td_queryset.values('region').annotate(count=Count('region'), sumKill=Sum('numKill'), sumWound=Sum('numWound'), sumProp=Sum('propValue')).values('region', 'region__regionName', 'count', 'sumKill', 'sumWound', 'sumProp')
+        gs = gs.annotate(regionName=F('region__regionName')).values('region', 'regionName', 'count', 'sumKill', 'sumWound', 'sumProp')
         return Response(gs.order_by('region'))
 
     @action(methods=['get'], detail=False)
@@ -208,7 +209,8 @@ class TDInfoViewSet(viewsets.ReadOnlyModelViewSet):
         返回某一地区各国家某时段袭击次数、死亡人数、经济损失
         '''
         td_queryset = self.filter_queryset(self.get_queryset())
-        gs = td_queryset.values('country').annotate(count=Count('country'), sumKill=Sum('numKill'), sumWound=Sum('numWound'), sumProp=Sum('propValue')).values('country', 'count', 'sumKill', 'sumWound', 'sumProp')
+        gs = td_queryset.values('country').annotate(count=Count('country'), sumKill=Sum('numKill'), sumWound=Sum('numWound'), sumProp=Sum('propValue')).values('country', 'country__countryName', 'count', 'sumKill', 'sumWound', 'sumProp')
+        gs = gs.annotate(countryName=F('country__countryName')).values('country', 'countryName', 'count', 'sumKill', 'sumWound', 'sumProp')
         return Response(gs.order_by('country'))
 
 

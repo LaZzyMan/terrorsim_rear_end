@@ -193,6 +193,24 @@ class TDInfoViewSet(viewsets.ReadOnlyModelViewSet):
         trend = td_queryset.values('year').annotate(count=Count('year'), sumKill=Sum('numKill'), sumWound=Sum('numWound'), sumProp=Sum('propValue')).values('year', 'count', 'sumKill', 'sumWound', 'sumProp')
         return Response(trend.order_by('year'))
 
+    @action(methods=['get'], detail=False)
+    def globalStatistics(self, request):
+        '''
+        返回全球各地区某时段袭击次数、死亡人数、经济损失
+        '''
+        td_queryset = self.filter_queryset(self.get_queryset())
+        gs = td_queryset.values('region').annotate(count=Count('region'), sumKill=Sum('numKill'), sumWound=Sum('numWound'), sumProp=Sum('propValue')).values('region', 'count', 'sumKill', 'sumWound', 'sumProp')
+        return Response(gs.order_by('region'))
+
+    @action(methods=['get'], detail=False)
+    def regionStatistics(self, request):
+        '''
+        返回某一地区各国家某时段袭击次数、死亡人数、经济损失
+        '''
+        td_queryset = self.filter_queryset(self.get_queryset())
+        gs = td_queryset.values('country').annotate(count=Count('country'), sumKill=Sum('numKill'), sumWound=Sum('numWound'), sumProp=Sum('propValue')).values('country', 'count', 'sumKill', 'sumWound', 'sumProp')
+        return Response(gs.order_by('country'))
+
 
 class TDGeneralViewSet(viewsets.ReadOnlyModelViewSet):
     '''

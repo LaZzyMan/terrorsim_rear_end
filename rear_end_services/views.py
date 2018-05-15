@@ -178,16 +178,9 @@ class TDInfoViewSet(viewsets.ReadOnlyModelViewSet):
         target = target.annotate(targetTypeName=F('targetType__targetTypeName')).values('targetType', 'targetTypeName', 'count')
         
         # sum_kill = td_queryset.values('numKill').annotate(sumKill=Sum('numKill'))
-        sum_kill = 0
-        sum_wound = 0
-        sum_prop = 0
-        for i in td_queryset:
-            if i.numKill is not None:
-                sum_kill += i.numKill
-            if i.numWound is not None:
-                sum_wound += i.numWound
-            if i.propValue is not None:
-                sum_prop += i.propValue
+        sum_kill = td_queryset.aggregate(sum=Sum('numKill'))['sum']
+        sum_wound = td_queryset.aggregate(sum=Sum('numWound'))['sum']
+        sum_prop = td_queryset.aggregate(sum=Sum('propValue'))['sum']
         return Response({'num': td_queryset.count(), 'kill': sum_kill, 'wound': sum_wound, 'prop': sum_prop, 'attack': attack, 'target': target, 'weapon': weapon})
     
     @action(methods=['get'], detail=False)

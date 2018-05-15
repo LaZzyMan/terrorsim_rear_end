@@ -43,9 +43,13 @@ class KeywordFilter(filters.BaseFilterBackend):
 
 class LenFilter(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
-        if queryset.count() > 100:
-            ids = queryset.values('id')[: 100]
-            return queryset.filter(id__in=list(ids))
+        limit = request.query_params.get('limit', None)
+        if limit is not None:
+            limit = int(limit)
+            if queryset.count() > limit:
+                return queryset[: limit]
+            else:
+                return queryset
         else:
             return queryset
 
@@ -142,11 +146,12 @@ class TargetViewSet(viewsets.ReadOnlyModelViewSet):
 
 class KeywordViewSet(viewsets.ReadOnlyModelViewSet):
     '''
-    list: 返回所有关键词出现频数数据
+    list: 返回所有关键词出现频数数据，使用limit限制返回词个数
     retrieve: 返回某一id对应的关键词词频
     '''
     queryset = models.Keyword.objects.all()
     serializer_class = serializers.KeywordSerializer
+    filter_backends = (LenFilter, )
 
 
 class TDInfoViewSet(viewsets.ReadOnlyModelViewSet):

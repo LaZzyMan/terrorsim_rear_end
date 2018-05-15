@@ -34,7 +34,7 @@ class KeywordFilter(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
         keyword = request.query_params.get('keyword', None)
         if keyword is not None:
-            k = models.Keyword.objects.get(wordId=keyword)
+            k = models.Keyword.objects.get(word=keyword)
             queryset = k.keywords.all()
             if queryset.count() > 100:
                 queryset = queryset[:100]

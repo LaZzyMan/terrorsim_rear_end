@@ -99,6 +99,7 @@ class CountryGeoViewSet(viewsets.ReadOnlyModelViewSet):
     '''
     queryset = models.Country.objects.all()
     serializer_class = serializers.CountryGeoSerializer
+    filter_backends = (RegionFilter, )
 
 
 class RegionGeoViewSet(viewsets.ReadOnlyModelViewSet):

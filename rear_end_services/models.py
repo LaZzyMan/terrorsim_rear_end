@@ -48,7 +48,7 @@ class Weapon(models.Model):
 
 class Keyword(models.Model):
     wordId = models.IntegerField(primary_key=True)
-    word = models.CharField(verbose_name='关键词', max_length=50)
+    word = models.CharField(verbose_name='关键词', max_length=50, db_index=True)
     frequency = models.IntegerField(verbose_name='出现次数')
 
     def __str__(self):

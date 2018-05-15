@@ -162,7 +162,7 @@ class TDInfoViewSet(viewsets.ReadOnlyModelViewSet):
     '''
     queryset = models.TerrorismData.objects.all()
     serializer_class = serializers.TDInfoSerialier
-    filter_backends = (KeywordFilter, CountryFilter, PeriodFilter, RegionFilter, PolygonFilter)
+    filter_backends = (KeywordFilter, CountryFilter, PeriodFilter, RegionFilter, PolygonFilter, YearFilter)
 
     @action(methods=['get'], detail=False)
     def statistics(self, request):

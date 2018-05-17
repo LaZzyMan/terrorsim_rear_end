@@ -6,6 +6,7 @@ from rear_end_services import views
 router = DefaultRouter()
 router.root_view_name = 'API List'
 router.register(r'tdgeneral', views.TDGeneralViewSet, base_name='tdgeneral')
+router.register(r'tdgeneral2', views.TDGeneralViewSet, base_name='tdgeneral2')
 router.register(r'tdinfo', views.TDInfoViewSet, base_name='tdinfo')
 router.register(r'country', views.CountryGeoViewSet, base_name='country')
 # router.register(r'countrytd', views.CountryViewSet, base_name='countrytd')

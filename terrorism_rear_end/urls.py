@@ -21,5 +21,6 @@ admin.autodiscover()
 urlpatterns = [
     path('gtd/admin', admin.site.urls),
     path('gtd/api-auth', include('rest_framework.urls')),
-    path('gtd/api/', include('rear_end_services.urls'))
+    path('gtd/api/', include('rear_end_services.urls')),
+    path('gtd', include('web.urls')),
 ]
